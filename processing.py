@@ -16,6 +16,7 @@ def clear():
 
 
 def quality():
+    print("Kualitas yang tersedia:\n")
     for a, quality in enumerate(quality_list):
         print(f"{a+1}. {quality}")
     while True:
@@ -34,6 +35,7 @@ def get_mirror(parsing_stream, url_stream):
     ul_parse_mirror = link.find('ul', {'class': quality_choice})
     parse_mirror = ul_parse_mirror.find_all('li')
     clear()
+    print("Mirror yang tersedia:\n")
     if parse_mirror:
         for a, q360 in enumerate(parse_mirror):
             mirror_360 = q360.find('a')
@@ -91,6 +93,7 @@ def get_video_id(data_content, url_stream):
     data_value = data_load['data']
     data_value_decode = base64.b64decode(data_value)
     get_video_url = s(data_value_decode, 'html.parser')
-    video_url = get_video_url.find('iframe')#
+    video_url = get_video_url.find('iframe')
+    vide_src = get_video_url.find('iframe')['src']
     clear()
-    media_player.initial_stream(video_url)
+    media_player.initial_stream(video_url, vide_src)
