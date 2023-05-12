@@ -94,6 +94,6 @@ def get_video_id(data_content, url_stream):
     data_value_decode = base64.b64decode(data_value)
     get_video_url = s(data_value_decode, 'html.parser')
     video_url = get_video_url.find('iframe')
-    vide_src = get_video_url.find('iframe')['src']
+    vide_src = get_video_url.find('iframe')['src']#
     clear()
     media_player.initial_stream(video_url, vide_src)
