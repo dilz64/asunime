@@ -83,7 +83,7 @@ response_episode = requests.get(url_episode)
 parsing_episode = soup(response_episode.text, "html.parser")
 
 judul_episode = parsing_episode.find_all(
-    "a", href=lambda href: href and ("/episode/" in href or "/batch/" in href))
+    "a", href=lambda href: href and ("/episode/" in href))
 
 if judul_episode:
     clear()
@@ -108,20 +108,24 @@ response_stream = requests.get(url_stream)
 parsing_stream = soup(response_stream.text, "html.parser")
 
 clear()
-print("1. Streaming")
-print("2. Downloads")
+processing.get_mirror(parsing_stream, url_stream)
 
-print(null_space)
 
-while True:
-    stream = input("Pilih Nomor: ")
-    if stream == '1':
-        clear()
-        processing.get_mirror(parsing_stream, url_stream)
-        break
-    elif stream == '2':
-        # get_download()
-        # OGP
-        break
-    else:
-        pass
+# clear()
+# print("1. Streaming")
+# print("2. Downloads")
+
+# print(null_space)
+
+# while True:
+#     stream = input("Pilih Nomor: ")
+#     if stream == '1':
+#         clear()
+#         processing.get_mirror(parsing_stream, url_stream)
+#         break
+#     elif stream == '2':
+#         # get_download()
+#         # OGP
+#         break
+#     else:
+#         pass
