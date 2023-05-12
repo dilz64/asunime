@@ -66,10 +66,22 @@ def search_judul():
         except ValueError:
             pass
         
+# def select_judul():
+#     url_episode = content[num_content-1].get("href")
+#     response_episode = requests.get(url_episode_parsing_episode = soup(response_episode.text, "html.parser"))
+    
+#     judul_episode = parsing_episode.find_all("a", href=lambda href: href and ("/episode/" in href or "/batch/" in href))
 
+#     if judul_episode:
+#         clear()
+#         print("Episode yang ditemukan:\n")
+#         for a, eps in enumerate(judul_episode):
+#             episode = eps.text
+#             print(f"{a+1}. {episode}")
 cls()
 find_judul_anime = None
 banner = "ASUNIME!"
 version = "1.0dev"
 print(banner + " " + version + "\n")
 search_judul()
+select_judul()
