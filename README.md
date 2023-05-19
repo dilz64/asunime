@@ -1,4 +1,4 @@
-**ASUNIME!**
+**ASUNIME! v1.00**
 
 *A Scrapping Tools Based on OtakuDesu StreamSite!*
 ##
