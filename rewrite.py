@@ -1,87 +1,45 @@
+from bs4 import BeautifulSoup as soup
 import requests
 import os
-from bs4 import BeautifulSoup as soup
 
-suffix = "lol"
-url = "https://otakudesu." + suffix + "/"
-error_connection = """
-Tidak dapat menghubung ke server!
-Coba ulangi lagi atau mungkin server lagi down
-"""
-null_space = ""
-null_obj = "[]"
+url = "https://otakudesu.lol/"
 
-#debug!
-y = "variable 200 OK!"
-
-def cls():
+def clear():
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
-        
-def search_judul():
+
+def search_titles():
     while True:
-        input_search = input("search: ")
-        if not input_search.strip():
+        search_titles_input = input("search: ")
+        if not search_titles_input.strip():
             pass
         else:
-            search_query = input_search.replace(" ", "+")
-            search = (url + "?s=" + search_query + "&post_type=anime")
-            find_anime = requests.get(search)
+            query_search_titles = search_titles_input.replace(" ", "+")
+            fetch_search_titles = (url + "?s=" + query_search_titles + "&post_type=anime")
+            request_search_titles = requests.get(fetch_search_titles)
 
-            if find_anime.status_code == 200:
-                parsing_search_anime = soup(find_anime.text, "html.parser")
-                content_search_anime = parsing_search_anime.find(
-                    "ul", {"class": "chivsrc"})
-
-                if content_search_anime is not None:
-                    content = content_search_anime.find_all(
-                        "a", href=True, title=True)
-
-                    if content:
-                        cls()
-                        print("Judul yang ditemukan:\n")
-                        for i, link in enumerate(content):
-                            title = link.text
-                            print(f"{i+1}. {title}")
-                        print("99. Kembali")
-                        break
-                    else:
-                        cls()
-                        print("Judul tidak ditemukan!\n")
+            if request_search_titles.status_code == 200:
+                parsing_search_titles = soup(request_search_titles.text, "html.parser")
+                parse_search_titles = parsing_search_titles.find("ul", {"class": "chivsrc"})
+                
+                if parse_search_titles is not None:
+                    search_titles_contents = parse_search_titles.find_all("a", href=True, title=True)
+                    return search_titles_contents
             else:
-                print(error_connection)
+                print("error")
                 exit()
-    while True:
-        num_content = input("Pilih nomor: ")
-        if num_content == "99":
-            cls()
-            search_judul()
-            break
-        try:
-            num_content = int(num_content)
-            if num_content > 0 and num_content <= len(content):
-                break
-        except ValueError:
-            pass
-        
-# def select_judul():
-#     url_episode = content[num_content-1].get("href")
-#     response_episode = requests.get(url_episode_parsing_episode = soup(response_episode.text, "html.parser"))
-    
-#     judul_episode = parsing_episode.find_all("a", href=lambda href: href and ("/episode/" in href or "/batch/" in href))
 
-#     if judul_episode:
-#         clear()
-#         print("Episode yang ditemukan:\n")
-#         for a, eps in enumerate(judul_episode):
-#             episode = eps.text
-#             print(f"{a+1}. {episode}")
-cls()
-find_judul_anime = None
-banner = "ASUNIME!"
-version = "1.0dev"
-print(banner + " " + version + "\n")
-search_judul()
-select_judul()
+def parsing_titles(search_titles_contents):
+    if search_titles_contents:
+        for contents_num, content_urls in enumerate(search_titles_contents):
+            content_titles = content_urls.text
+            print(f"{contents_num+1}.{content_titles}")
+    else:
+        print("Not Found!")
+        
+
+search_result = search_titles()
+parsed_results = parsing_titles(search_result)
+
